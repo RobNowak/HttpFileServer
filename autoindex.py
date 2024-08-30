@@ -1,6 +1,7 @@
 #!/bin/python
 import argparse
 import os
+import socket
 
 from flask import Flask
 from flask_autoindex import AutoIndex
@@ -16,7 +17,8 @@ def http_file_server(directory: str | None = None):
 
     app = Flask(__name__)
     app.config.from_prefixed_env()
-    AutoIndex(app, browse_root=directory)
+
+    AutoIndex(app, browse_root=directory, template_context = dict(SITENAME = socket.gethostname()))
     return app
 
 
@@ -32,4 +34,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     app = http_file_server(args.directory)
+
     app.run(host=args.ip, port=args.port)
