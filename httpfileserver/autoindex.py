@@ -6,7 +6,7 @@ import socket
 from flask import Flask
 from flask_autoindex import AutoIndex
 
-def http_file_server(directory: str | None = None):
+def create_server(directory: str | None = None):
     
     if directory == None:
         dir_env = os.getenv("HFS_DIRECTORY")
@@ -33,6 +33,6 @@ if __name__ == '__main__':
             help='the directory to serve.')
 
     args = parser.parse_args()
-    app = http_file_server(args.directory)
+    app = create_server(args.directory)
 
     app.run(host=args.ip, port=args.port)
